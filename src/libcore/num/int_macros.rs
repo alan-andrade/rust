@@ -33,6 +33,13 @@ impl Ord for $T {
     #[inline]
     fn lt(&self, other: &$T) -> bool { *self < *other }
 }
+
+#[cfg(not(test))]
+impl<'a> Ord for &'a mut $T {
+    #[inline]
+    fn lt(&self, other: &&'a mut $T) -> bool { **self < **other }
+}
+
 #[cfg(not(test))]
 impl TotalEq for $T {}
 #[cfg(not(test))]
@@ -40,6 +47,13 @@ impl Eq for $T {
     #[inline]
     fn eq(&self, other: &$T) -> bool { *self == *other }
 }
+
+#[cfg(not(test))]
+impl<'a> Eq for &'a mut $T {
+    #[inline]
+    fn eq(&self, other: &&'a mut $T) -> bool { **self == **other }
+}
+
 #[cfg(not(test))]
 impl TotalOrd for $T {
     #[inline]
